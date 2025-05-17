@@ -1,3 +1,4 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  // Learned: install plugin "eslint-config-prettier" to turn off conflictions between prettier and next - https://nextjs.org/docs/14/app/building-your-application/configuring/eslint#usage-with-other-tools
+  "extends": ["next/core-web-vitals", "next/typescript", "prettier"]
 }
