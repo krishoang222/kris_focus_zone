@@ -5,6 +5,30 @@ import { z } from 'zod';
 const durationSchema = z.number().multipleOf(60).positive().int();
 type Duration = z.infer<typeof durationSchema>;
 
+async function clickHandler({ taskName }: { taskName: string }) {
+  const notificationConfig = {
+    body: `Your session [${taskName}] ended!`,
+    icon: '/flash-icon.png',
+  };
+
+  if (!('Notification' in window)) {
+    // Check if the browser supports notifications
+    alert('This browser does not support desktop notification');
+  } else if (Notification.permission === 'granted') {
+    // Check whether notification permissions have already been granted;
+    // if so, create a notification
+    new Notification('Finished session!', notificationConfig);
+  } else if (Notification.permission !== 'denied') {
+    // We need to ask the user for permission
+    Notification.requestPermission().then((permission) => {
+      // If the user accepts, let's create a notification
+      if (permission === 'granted') {
+        new Notification('Finished session!', notificationConfig);
+      }
+    });
+  }
+}
+
 export default function Timer({ duration, taskName }: { duration: Duration; taskName: string }) {
   const validatedDuration = durationSchema.parse(duration);
 
@@ -37,6 +61,12 @@ export default function Timer({ duration, taskName }: { duration: Duration; task
         </span>
       </div>
       <p>Focus on: {taskName}</p>
+      <button
+        onClick={() => clickHandler({ taskName })}
+        className="mt-4 cursor-pointer border bg-gray-700 p-2 text-xs text-white hover:bg-gray-900"
+      >
+        Finish Session
+      </button>
     </div>
   );
 }
