@@ -2,7 +2,7 @@
 
 import { useFormStatus } from 'react-dom';
 
-export default function SubmitButton() {
+export default function SubmitButton({ statusMessage }: { statusMessage?: string }) {
   const { pending } = useFormStatus();
 
   return (
@@ -14,7 +14,7 @@ export default function SubmitButton() {
       >
         Submit
       </button>
-      <p>{pending ? 'Status: Loading... ' : ''}</p>
+      <p>{pending ? 'Status: Loading... ' : statusMessage}</p>
     </div>
   );
 }

@@ -12,18 +12,17 @@ export default function Home() {
     <div>
       <form action={formAction} className="flex w-[300px] flex-col justify-between gap-y-4">
         <div className="flex justify-between">
-          <label htmlFor="timer">Timer (sec):</label>
-          <input type="number" id="timer" name="timer" className="border" />
+          <label htmlFor="duration">Timer (min):</label>
+          <input type="number" id="duration" name="duration" required className="border" />
         </div>
 
         <div className="flex justify-between">
           <label htmlFor="taskName">Task Name:</label>
-          <input type="text" id="taskName" name="taskName" className="border" />
+          <input type="text" id="taskName" name="taskName" required className="border" />
         </div>
-        <p>{state?.message}</p>
-        <SubmitButton />
+        <SubmitButton statusMessage={state?.message} />
       </form>
-      {state?.data && <Timer duration={state.data.timer} taskName={state.data.taskName} />}
+      {state?.data && <Timer duration={state.data.duration * 60} taskName={state.data.taskName} />}
     </div>
   );
 }
